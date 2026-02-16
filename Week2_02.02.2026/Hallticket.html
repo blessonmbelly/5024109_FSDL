@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall Ticket - Examination</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .ticket-container {
+            width: 21cm;
+            height: 29.7cm;
+            margin: auto;
+            background-color: white;
+            border: 2px solid #333;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.8cm;
+            margin-bottom: 0.8cm;
+        }
+        
+        .header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+        
+        .header h1 {
+            color: #003366;
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 11px;
+        }
+        
+        .hall-ticket-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 0.8cm;
+            text-decoration: underline;
+        }
+        
+        .student-photo {
+            float: right;
+            width: 90px;
+            height: 110px;
+            border: 2px solid #333;
+            margin: 0 0 5px 10px;
+            text-align: center;
+            line-height: 110px;
+            background-color: #e0e0e0;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .details-section {
+            margin-bottom: 0.8cm;
+            clear: both;
+            font-size: 13px;
+        }
+        
+        .detail-row {
+            display: flex;
+            padding: 4px 0;
+            border-bottom: 1px dotted #999;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            width: 35%;
+            color: #003366;
+        }
+        
+        .detail-value {
+            width: 65%;
+            color: #333;
+        }
+        
+        .exam-details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 0.6cm;
+            margin: 0.6cm 0;
+            font-size: 13px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 0.6cm;
+            border-top: 2px solid #333;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .footer p {
+            margin: 2px 0;
+        }
+        
+        .footer ul {
+            margin: 5px 0 5px 20px;
+            font-size: 9px;
+        }
+        
+        .footer li {
+            margin: 1px 0;
+        }
+        
+        .signature {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 0.8cm;
+            text-align: center;
+            font-size: 11px;
+        }
+        
+        .signature-box {
+            width: 25%;
+        }
+        
+        .signature-line {
+            border-top: 1px solid #333;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 10px;
+        }
+        
+        .print-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 30px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .print-btn:hover {
+            background-color: #002244;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            .ticket-container {
+                width: 21cm;
+                height: 29.7cm;
+                margin: 0;
+                padding: 0.8cm;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">Print Hall Ticket</button>
+    
+    <div class="ticket-container">
+        <div class="header">
+            <img src="https://apms.fcrit.ac.in/apms/fcritlogo.png" alt="">
+            <h1>FSDL University</h1>
+            <p>Full Stack Development Lab - Academic Institution</p>
+        </div>
+        
+        <div class="hall-ticket-title">EXAMINATION HALL TICKET</div>
+        
+        <div class="student-photo">
+            [PHOTO<br>
+        </div>
+        
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-label">Student Name:</div>
+                <div class="detail-value">Blesson Belly</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Roll Number:</div>
+                <div class="detail-value">5024109</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Registration No.:</div>
+                <div class="detail-value">REG/2025/10234</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Course:</div>
+                <div class="detail-value">Full Stack Development</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Semester:</div>
+                <div class="detail-value">4th Semester</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Date of Birth:</div>
+                <div class="detail-value">04-03-2007</div>
+            </div>
+        </div>
+        
+        <div class="exam-details">
+            <div class="detail-row">
+                <div class="detail-label">Subject:</div>
+                <div class="detail-value">HTML Fundamentals</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Subject Code:</div>
+                <div class="detail-value">CS-401</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Exam Date:</div>
+                <div class="detail-value">20-01-2026</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Time:</div>
+                <div class="detail-value">10:00 AM - 01:00 PM</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Venue/Hall:</div>
+                <div class="detail-value">Examination Hall - Block A, Room 201</div>
+            </div>
+            
+            <div class="detail-row">
+                <div class="detail-label">Center Code:</div>
+                <div class="detail-value">CENTER-001</div>
+            </div>
+        </div>
+        
+        <div style="background-color: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; margin: 15px 0; font-size: 12px;">
+            <strong>Important Instructions:</strong>
+            <ul style="margin-top: 8px; margin-left: 20px;">
+                <li>Reach 15 minutes before the examination time</li>
+                <li>Carry valid ID proof along with Hall Ticket</li>
+                <li>Follow all COVID-19 safety protocols</li>
+                <li>Maintain silence in examination hall</li>
+                <li>Electronic devices are strictly prohibited</li>
+            </ul>
+        </div>
+        
+        <div class="signature">
+            <div class="signature-box">
+                <div style="height: 40px;"></div>
+                <div class="signature-line">Examiner's Sign</div>
+            </div>
+            <div class="signature-box">
+                <div style="height: 40px;"></div>
+                <div class="signature-line">Invigilator's Sign</div>
+            </div>
+            <div class="signature-box">
+                <div style="height: 40px;"></div>
+                <div class="signature-line">Principal's Sign</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This is an official document. Any modification or misuse will lead to cancellation of admission.</p>
+            <p>For any queries, contact: <strong>exam.support@fsdl.edu</strong></p>
+        </div>
+    </div>
+</body>
+</html>
