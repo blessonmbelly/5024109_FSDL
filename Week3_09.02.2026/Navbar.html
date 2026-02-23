@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport meta tag for responsive design on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for hamburger menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR SECTION -->
+    <!-- Main navigation bar container -->
+    <nav class="navbar">
+        <!-- Container for nav content to limit max-width and center -->
+        <div class="nav-container">
+            
+            <!-- Logo/Brand name on the left -->
+            <div class="navbar-logo">
+                <a href="#home">
+                    <!-- Logo icon/text - can be replaced with img tag for actual logo -->
+                    <i class="fas fa-rocket"></i>
+                    TechBrand
+                </a>
+            </div>
+
+            <!-- Hamburger menu icon (visible only on mobile) -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <!-- Navigation menu items -->
+            <!-- Toggle class 'active' to show/hide menu on mobile -->
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#login" class="nav-link nav-link-login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT SECTION -->
+    <!-- Hero section to demonstrate navbar usage -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to TechBrand</h1>
+            <p>Build amazing responsive websites with a modern navbar</p>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>
+                We create innovative digital solutions that help businesses grow and succeed in the 
+                modern digital landscape. Our team is dedicated to providing the best service to our clients.
+            </p>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Professional and responsive web development services</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful and user-friendly design solutions</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Apps</h3>
+                    <p>Native and cross-platform mobile applications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- LOGIN SECTION -->
+    <section class="login" id="login">
+        <div class="container">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form class="login-form">
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="submit-button">Login</button>
+                    <p class="signup-link">Don't have an account? <a href="#">Sign up here</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 TechBrand. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT for hamburger menu functionality -->
+    <script>
+        // Get hamburger menu and nav menu elements
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Add click event to hamburger icon
+        hamburger.addEventListener('click', function() {
+            // Toggle the 'active' class to show/hide menu
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when a menu item is clicked
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
