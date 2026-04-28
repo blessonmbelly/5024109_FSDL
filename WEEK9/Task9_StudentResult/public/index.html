@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary-glow: rgba(99, 102, 241, 0.5);
+            --accent-color: #6366f1;
+            --accent-hover: #818cf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-light {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 1rem 1rem 3rem;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        .input-group input:focus + i,
+        .input-group input:not(:placeholder-shown) + i {
+            color: var(--accent-color);
+        }
+
+        .calc-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #4f46e5 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px -10px var(--accent-color);
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -10px var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
+        }
+
+        .calc-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Result Display */
+        .result-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+
+        .result-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .result-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .grade-a { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .grade-b { color: #60a5fa; text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); }
+        .grade-c { color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+        .grade-fail { color: #f87171; text-shadow: 0 0 15px rgba(248, 113, 113, 0.4); }
+
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+
+    <div class="container">
+        <div class="header">
+            <h2>Academic Tracker</h2>
+            <p>Enter marks out of 100 for 5 subjects</p>
+        </div>
+
+        <div class="input-grid">
+            <div class="input-group">
+                <input type="number" id="m1" placeholder="Mathematics" min="0" max="100">
+                <i data-lucide="calculator"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="m2" placeholder="Physics" min="0" max="100">
+                <i data-lucide="atom"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="m3" placeholder="Chemistry" min="0" max="100">
+                <i data-lucide="flask-conical"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="m4" placeholder="Computer Science" min="0" max="100">
+                <i data-lucide="code"></i>
+            </div>
+            <div class="input-group">
+                <input type="number" id="m5" placeholder="English Literature" min="0" max="100">
+                <i data-lucide="book-open"></i>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="getResult()" id="calcBtn">
+            <i data-lucide="sparkles"></i>
+            Calculate Result
+        </button>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-grid">
+                <div class="result-card">
+                    <div class="result-label">Total</div>
+                    <div class="result-value" id="outTotal">0</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-label">Percentage</div>
+                    <div class="result-value" id="outPercent">0%</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-label">Grade</div>
+                    <div class="result-value" id="outGrade">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        function getResult() {
+            const btn = document.getElementById('calcBtn');
+            const originalText = btn.innerHTML;
+            
+            // Loading State
+            btn.innerHTML = `<i data-lucide="loader-2" class="lucide-loader-2" style="animation: spin 1s linear infinite;"></i> Processing...`;
+            lucide.createIcons();
+            btn.style.opacity = '0.8';
+            btn.style.pointerEvents = 'none';
+
+            let marks = [
+                Number(document.getElementById("m1").value) || 0,
+                Number(document.getElementById("m2").value) || 0,
+                Number(document.getElementById("m3").value) || 0,
+                Number(document.getElementById("m4").value) || 0,
+                Number(document.getElementById("m5").value) || 0
+            ];
+
+            fetch("/result", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ marks })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Restore Button
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+
+                // Display Data
+                document.getElementById('outTotal').innerText = data.total;
+                document.getElementById('outPercent').innerText = data.percentage + '%';
+                
+                const gradeElem = document.getElementById('outGrade');
+                gradeElem.innerText = data.grade;
+                
+                // Reset classes
+                gradeElem.className = 'result-value';
+                
+                // Add color based on grade
+                if(data.grade === 'A') gradeElem.classList.add('grade-a');
+                else if(data.grade === 'B') gradeElem.classList.add('grade-b');
+                else if(data.grade === 'C') gradeElem.classList.add('grade-c');
+                else gradeElem.classList.add('grade-fail');
+
+                // Show Container with animation
+                const container = document.getElementById('resultContainer');
+                container.classList.add('show');
+            })
+            .catch(err => {
+                console.error("Error calculating results", err);
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+                alert("Failed to connect to the server.");
+            });
+        }
+    </script>
+</body>
+</html>

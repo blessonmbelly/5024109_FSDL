@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium AngularJS App</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="MainController" ng-class="{'dark-theme': theme === 'Dark'}">
+    <div class="background-animation"></div>
+
+    <main class="glass-panel">
+        <header class="panel-header">
+            <div class="title-wrapper">
+                <i data-lucide="sparkles" class="icon-sparkle"></i>
+                <h1>Welcome Back</h1>
+            </div>
+            <button class="theme-toggle" ng-click="toggleTheme()" aria-label="Toggle Theme">
+                <i data-lucide="moon" ng-show="theme === 'Light'"></i>
+                <i data-lucide="sun" ng-show="theme === 'Dark'"></i>
+            </button>
+        </header>
+
+        <section class="form-section">
+            <div class="input-group">
+                <label for="nameInput">What's your name?</label>
+                <div class="input-wrapper">
+                    <i data-lucide="user"></i>
+                    <input id="nameInput" type="text" ng-model="user.name" placeholder="E.g. Alex Doe">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="ageInput">How old are you?</label>
+                <div class="input-wrapper">
+                    <i data-lucide="calendar"></i>
+                    <input id="ageInput" type="number" ng-model="user.age" placeholder="E.g. 25">
+                </div>
+            </div>
+        </section>
+
+        <section class="greeting-section" ng-class="{'active': user.name}">
+            <h2>Hello, <span class="highlight">{{ user.name || 'Guest' }}</span>!</h2>
+            <p class="age-display" ng-if="user.age">You are currently <span class="highlight">{{ user.age }}</span> years old.</p>
+        </section>
+
+        <div class="action-bar">
+            <button class="primary-btn" ng-click="generateMessage()">
+                <i data-lucide="zap"></i>
+                Generate Magic Message
+            </button>
+        </div>
+
+        <div class="message-box" ng-class="{'show': message}">
+            <p>{{ message }}</p>
+        </div>
+
+        <hr class="divider">
+
+        <section class="hobbies-section">
+            <h3>Your Hobbies</h3>
+            <div class="hobby-input-container">
+                <input type="text" ng-model="newHobby" placeholder="Type a hobby and press Add" ng-keypress="($event.charCode==13)? addHobby() : return">
+                <button class="secondary-btn" ng-click="addHobby()">
+                    <i data-lucide="plus"></i> Add
+                </button>
+            </div>
+
+            <div class="hobbies-grid">
+                <div class="hobby-pill" ng-repeat="hobby in hobbies track by $index">
+                    {{ hobby }}
+                    <button class="remove-hobby" ng-click="removeHobby($index)">
+                        <i data-lucide="x" class="icon-small"></i>
+                    </button>
+                </div>
+                <div class="empty-state" ng-if="hobbies.length === 0">
+                    No hobbies added yet.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
