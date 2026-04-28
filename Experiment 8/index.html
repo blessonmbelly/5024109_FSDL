@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records Portal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="StudentController">
+
+    <div class="main-container">
+        
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon"></div>
+                    <h1>Student Records Portal</h1>
+                </div>
+                <p class="subtitle">Experiment 8: Events & Validations in AngularJS</p>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Left Side: Form -->
+            <div class="form-section glass-panel">
+                <div class="panel-header">
+                    <h2>Add New Student</h2>
+                    <span class="status-badge" ng-class="{'valid-badge': studentForm.$valid, 'invalid-badge': studentForm.$invalid}">
+                        Form Status: {{studentForm.$valid ? 'Valid' : 'Invalid'}}
+                    </span>
+                </div>
+
+                <form name="studentForm" ng-submit="addStudent(studentForm.$valid)" novalidate>
+                    
+                    <!-- Roll Number -->
+                    <div class="form-group" ng-class="{ 'has-error' : studentForm.rollNo.$invalid && !studentForm.rollNo.$pristine }">
+                        <label for="rollNo">Roll Number</label>
+                        <input type="text" 
+                               id="rollNo" 
+                               name="rollNo" 
+                               class="form-control" 
+                               ng-model="newStudent.rollNo" 
+                               required 
+                               ng-pattern="/^[A-Z0-9]{5,10}$/"
+                               placeholder="e.g. CS202401">
+                        
+                        <!-- Validation Messages -->
+                        <div class="error-messages" ng-show="studentForm.rollNo.$invalid && !studentForm.rollNo.$pristine">
+                            <span class="error" ng-show="studentForm.rollNo.$error.required">Roll Number is required.</span>
+                            <span class="error" ng-show="studentForm.rollNo.$error.pattern">Must be 5-10 alphanumeric characters.</span>
+                        </div>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="form-group" ng-class="{ 'has-error' : studentForm.fullName.$invalid && !studentForm.fullName.$pristine }">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" 
+                               id="fullName" 
+                               name="fullName" 
+                               class="form-control" 
+                               ng-model="newStudent.fullName" 
+                               required 
+                               ng-minlength="3" 
+                               ng-maxlength="50"
+                               placeholder="John Doe">
+                               
+                        <div class="error-messages" ng-show="studentForm.fullName.$invalid && !studentForm.fullName.$pristine">
+                            <span class="error" ng-show="studentForm.fullName.$error.required">Name is required.</span>
+                            <span class="error" ng-show="studentForm.fullName.$error.minlength">Name is too short.</span>
+                            <span class="error" ng-show="studentForm.fullName.$error.maxlength">Name is too long.</span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group" ng-class="{ 'has-error' : studentForm.email.$invalid && !studentForm.email.$pristine }">
+                        <label for="email">Email Address</label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               class="form-control" 
+                               ng-model="newStudent.email" 
+                               required
+                               placeholder="john.doe@university.edu">
+                               
+                        <div class="error-messages" ng-show="studentForm.email.$invalid && !studentForm.email.$pristine">
+                            <span class="error" ng-show="studentForm.email.$error.required">Email is required.</span>
+                            <span class="error" ng-show="studentForm.email.$error.email">Invalid email format.</span>
+                        </div>
+                    </div>
+
+                    <!-- Age & Course Row -->
+                    <div class="form-row">
+                        <!-- Age -->
+                        <div class="form-group half-width" ng-class="{ 'has-error' : studentForm.age.$invalid && !studentForm.age.$pristine }">
+                            <label for="age">Age</label>
+                            <input type="number" 
+                                   id="age" 
+                                   name="age" 
+                                   class="form-control" 
+                                   ng-model="newStudent.age" 
+                                   required 
+                                   min="16" 
+                                   max="100"
+                                   placeholder="18">
+                                   
+                            <div class="error-messages" ng-show="studentForm.age.$invalid && !studentForm.age.$pristine">
+                                <span class="error" ng-show="studentForm.age.$error.required">Age is required.</span>
+                                <span class="error" ng-show="studentForm.age.$error.min">Must be at least 16.</span>
+                                <span class="error" ng-show="studentForm.age.$error.max">Cannot exceed 100.</span>
+                            </div>
+                        </div>
+
+                        <!-- Course -->
+                        <div class="form-group half-width" ng-class="{ 'has-error' : studentForm.course.$invalid && !studentForm.course.$pristine }">
+                            <label for="course">Course</label>
+                            <select id="course" 
+                                    name="course" 
+                                    class="form-control" 
+                                    ng-model="newStudent.course" 
+                                    required>
+                                <option value="" disabled selected>Select Course</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Mechanical">Mechanical</option>
+                            </select>
+                            
+                            <div class="error-messages" ng-show="studentForm.course.$invalid && !studentForm.course.$pristine">
+                                <span class="error" ng-show="studentForm.course.$error.required">Please select a course.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="submit" 
+                                class="btn-submit" 
+                                ng-disabled="studentForm.$invalid"
+                                ng-class="{'disabled-btn': studentForm.$invalid}">
+                            <i class="icon-plus"></i> Add Student
+                        </button>
+                    </div>
+                    
+                    <!-- Form State Debug (Optional, requested to use $valid etc) -->
+                    <div class="debug-info">
+                        <strong>AngularJS Form States:</strong>
+                        <div class="state-badges">
+                            <span class="badge" ng-class="studentForm.$pristine ? 'badge-on' : 'badge-off'">$pristine</span>
+                            <span class="badge" ng-class="studentForm.$dirty ? 'badge-on' : 'badge-off'">$dirty</span>
+                            <span class="badge" ng-class="studentForm.$valid ? 'badge-on' : 'badge-off'">$valid</span>
+                            <span class="badge" ng-class="studentForm.$invalid ? 'badge-on' : 'badge-off'">$invalid</span>
+                            <span class="badge" ng-class="studentForm.$submitted ? 'badge-on' : 'badge-off'">$submitted</span>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!-- Success Alert -->
+                <div class="alert-success" ng-class="{'show-alert': successMessage}">
+                    {{ successMessage }}
+                </div>
+            </div>
+
+            <!-- Right Side: Data Table -->
+            <div class="table-section glass-panel">
+                <div class="panel-header">
+                    <h2>Registered Students <span class="count-badge">{{students.length}}</span></h2>
+                    <div class="search-box">
+                        <input type="text" ng-model="searchText" placeholder="Search students...">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" ng-if="students.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Roll No</th>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Age</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ng-repeat with events ng-mouseenter and ng-mouseleave -->
+                            <tr ng-repeat="student in students | filter:searchText track by $index"
+                                ng-mouseenter="hoverRow($index)"
+                                ng-mouseleave="hoverRow(null)"
+                                ng-class="{'row-hover': hoveredIndex === $index}">
+                                <td><span class="roll-tag">{{student.rollNo}}</span></td>
+                                <td>
+                                    <div class="student-info">
+                                        <span class="student-name">{{student.fullName}}</span>
+                                        <span class="student-email">{{student.email}}</span>
+                                    </div>
+                                </td>
+                                <td>{{student.course}}</td>
+                                <td>{{student.age}}</td>
+                                <td>
+                                    <!-- ng-click event -->
+                                    <button class="btn-delete" ng-click="removeStudent($index)" title="Remove Record">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="empty-state" ng-if="students.length === 0">
+                        <div class="empty-icon">📁</div>
+                        <h3>No Records Found</h3>
+                        <p>Add a student using the form to see them listed here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
