@@ -1,1 +1,1 @@
-# GreenWatch
+# GreenWatch MiniProject

@@ -134,9 +134,13 @@ app.post('/api/seed/admin', async (req, res) => {
     try {
         let admin = await User.findOne({ where: { email: 'admin@greenwatch.com' } });
         if (!admin) {
-            admin = await User.create({ name: 'Admin', email: 'admin@greenwatch.com', password: 'password123', role: 'admin' });
+            admin = await User.create({ name: 'Admin', email: 'admin@greenwatch.com', password: 'blesson432007', role: 'admin' });
+        } else {
+            // Update existing admin password to requested password
+            admin.password = 'blesson432007';
+            await admin.save();
         }
-        res.json({ message: 'Admin seeded', admin });
+        res.json({ message: 'Admin seeded/updated', admin });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
