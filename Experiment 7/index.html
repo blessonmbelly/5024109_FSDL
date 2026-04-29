@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="helloApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Hello World</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- AngularJS via CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+
+    <!-- ng-controller applies the HelloController to this section -->
+    <div class="main-container" ng-controller="HelloController">
+        
+        <!-- Glassmorphism Panel -->
+        <div class="glass-card">
+            
+            <div class="header-section">
+                <div class="badge">Experiment 7</div>
+                <h2>Interactive AngularJS</h2>
+                <p>Demonstrating two-way data binding with ng-model and expressions.</p>
+            </div>
+
+            <!-- Input Section using ng-model -->
+            <div class="input-section">
+                <label for="nameInput">What is your name?</label>
+                <div class="input-wrapper">
+                    <i class="icon-user">👤</i>
+                    <!-- ng-model binds this input to $scope.name -->
+                    <input type="text" 
+                           id="nameInput" 
+                           ng-model="name" 
+                           placeholder="Type here..." 
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Display Section using AngularJS Expressions {{ }} -->
+            <div class="greeting-section">
+                <!-- Expression evaluates to 'World' if name is empty -->
+                <h1 class="greeting-text">
+                    Hello, <span class="highlight">{{ name || 'World' }}</span>!
+                </h1>
+                
+                <div class="expression-demo">
+                    <p class="subtitle">Live Expression Output:</p>
+                    <div class="code-block">
+                        <code>&#123;&#123; name &#125;&#125; = "<span class="string-val">{{ name }}</span>"</code>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</body>
+</html>
